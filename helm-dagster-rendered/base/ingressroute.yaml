@@ -1,0 +1,14 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dagster-webserver
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: PathPrefix(`/dagster`)
+      kind: Rule
+      services:
+        - name: release-name-dagster-webserver
+          port: 80
