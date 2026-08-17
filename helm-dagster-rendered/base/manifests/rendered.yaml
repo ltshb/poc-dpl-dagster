@@ -5,10 +5,10 @@ kind: ServiceAccount
 metadata:
   name: release-name-dagster-user-deployments-user-deployments
   labels: 
-    helm.sh/chart: dagster-user-deployments-1.13.17
+    helm.sh/chart: dagster-user-deployments-1.13.18
     app.kubernetes.io/name: dagster-user-deployments
     app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.13.17"
+    app.kubernetes.io/version: "1.13.18"
     app.kubernetes.io/managed-by: Helm
   annotations:
     {}
@@ -21,10 +21,10 @@ kind: ServiceAccount
 metadata:
   name: release-name-dagster
   labels: 
-    helm.sh/chart: dagster-1.13.17
+    helm.sh/chart: dagster-1.13.18
     app.kubernetes.io/name: dagster
     app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.13.17"
+    app.kubernetes.io/version: "1.13.18"
     app.kubernetes.io/managed-by: Helm
   annotations:
     {}
@@ -51,7 +51,7 @@ metadata:
   name: dagster-postgresql-secret
   labels:
     app: "dagster"
-    chart: "dagster-1.13.17"
+    chart: "dagster-1.13.18"
     release: "release-name"
     heritage: "Helm"
 type: Opaque
@@ -67,7 +67,7 @@ metadata:
   name: release-name-dagster-user-deployments-user-deployments-shared-env
   labels:
     app: dagster-user-deployments
-    chart: dagster-user-deployments-1.13.17
+    chart: dagster-user-deployments-1.13.18
     release: release-name
     heritage: Helm
 data:
@@ -82,10 +82,10 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: release-name-dagster-user-deployments-k8s-example-user-code-1-user-env
+  name: release-name-dagster-user-deployments-k8s-pipeline-1-user-env
   labels:
     app: dagster-user-deployments
-    chart: dagster-user-deployments-1.13.17
+    chart: dagster-user-deployments-1.13.18
     release: release-name
     heritage: Helm
 data:
@@ -99,7 +99,7 @@ metadata:
   name: release-name-dagster-daemon-env
   labels:
     app: dagster
-    chart: dagster-1.13.17
+    chart: dagster-1.13.18
     release: release-name
     heritage: Helm
 data:
@@ -107,7 +107,7 @@ data:
   DAGSTER_HOME: "/opt/dagster/dagster_home"
   DAGSTER_K8S_PIPELINE_RUN_NAMESPACE: "dagster"
   DAGSTER_K8S_PIPELINE_RUN_ENV_CONFIGMAP: "release-name-dagster-pipeline-env"
-  DAGSTER_K8S_PIPELINE_RUN_IMAGE: "docker.io/dagster/user-code-example:1.13.17"
+  DAGSTER_K8S_PIPELINE_RUN_IMAGE: "docker.io/dagster/user-code-example:1.13.18"
   DAGSTER_K8S_PIPELINE_RUN_IMAGE_PULL_POLICY: "Always"
   # This is a list by default, but for backcompat it can be a map. If it's a list, the env is applied directly
   # to the container.
@@ -119,7 +119,7 @@ metadata:
   name: release-name-dagster-pipeline-env
   labels:
     app: dagster
-    chart: dagster-1.13.17
+    chart: dagster-1.13.18
     release: release-name
     heritage: Helm
 data:
@@ -127,7 +127,7 @@ data:
   DAGSTER_HOME: "/opt/dagster/dagster_home"
   DAGSTER_K8S_PIPELINE_RUN_NAMESPACE: "dagster"
   DAGSTER_K8S_PIPELINE_RUN_ENV_CONFIGMAP: "release-name-dagster-pipeline-env"
-  DAGSTER_K8S_PIPELINE_RUN_IMAGE: "docker.io/dagster/user-code-example:1.13.17"
+  DAGSTER_K8S_PIPELINE_RUN_IMAGE: "docker.io/dagster/user-code-example:1.13.18"
   DAGSTER_K8S_PIPELINE_RUN_IMAGE_PULL_POLICY: "Always"
 
 ---
@@ -138,7 +138,7 @@ metadata:
   name: release-name-dagster-webserver-env
   labels:
     app: dagster
-    chart: dagster-1.13.17
+    chart: dagster-1.13.18
     release: release-name
     heritage: Helm
 data:
@@ -146,7 +146,7 @@ data:
   DAGSTER_HOME: "/opt/dagster/dagster_home"
   DAGSTER_K8S_PIPELINE_RUN_NAMESPACE: "dagster"
   DAGSTER_K8S_PIPELINE_RUN_ENV_CONFIGMAP: "release-name-dagster-pipeline-env"
-  DAGSTER_K8S_PIPELINE_RUN_IMAGE: "docker.io/dagster/user-code-example:1.13.17"
+  DAGSTER_K8S_PIPELINE_RUN_IMAGE: "docker.io/dagster/user-code-example:1.13.18"
   DAGSTER_K8S_PIPELINE_RUN_IMAGE_PULL_POLICY: "Always"
   # This is a list by default, but for backcompat it can be a map. If it's a list, the env is applied directly
   # to the container.
@@ -159,7 +159,7 @@ metadata:
   name: release-name-dagster-instance
   labels:
     app: dagster
-    chart: dagster-1.13.17
+    chart: dagster-1.13.18
     release: release-name
     heritage: Helm
 data:
@@ -263,16 +263,16 @@ metadata:
   name: release-name-dagster-workspace-yaml
   labels:
     app: dagster
-    chart: dagster-1.13.17
+    chart: dagster-1.13.18
     release: release-name
     heritage: Helm
 data:
   workspace.yaml: |
     load_from:
       - grpc_server:
-          host: k8s-example-user-code-1
+          host: k8s-pipeline-1
           port: 3030
-          location_name: k8s-example-user-code-1
+          location_name: k8s-pipeline-1
           
 
 ---
@@ -282,10 +282,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: release-name-dagster-user-deployments-role
   labels: 
-    helm.sh/chart: dagster-user-deployments-1.13.17
+    helm.sh/chart: dagster-user-deployments-1.13.18
     app.kubernetes.io/name: dagster-user-deployments
     app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.13.17"
+    app.kubernetes.io/version: "1.13.18"
     app.kubernetes.io/managed-by: Helm
 
 # Allow the Dagster service account to read and write Kubernetes jobs, deployments, pods, and events.
@@ -311,7 +311,7 @@ metadata:
   name: release-name-dagster-role
   labels:
     app: dagster
-    chart: dagster-1.13.17
+    chart: dagster-1.13.18
     release: "release-name"
     heritage: "Helm"
 
@@ -337,10 +337,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: release-name-dagster-user-deployments-rolebinding
   labels: 
-    helm.sh/chart: dagster-user-deployments-1.13.17
+    helm.sh/chart: dagster-user-deployments-1.13.18
     app.kubernetes.io/name: dagster-user-deployments
     app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.13.17"
+    app.kubernetes.io/version: "1.13.18"
     app.kubernetes.io/managed-by: Helm
 
 subjects:
@@ -358,7 +358,7 @@ metadata:
   name: release-name-dagster-rolebinding
   labels:
     app: dagster
-    chart: dagster-1.13.17
+    chart: dagster-1.13.18
     release: "release-name"
     heritage: "Helm"
 subjects:
@@ -373,15 +373,15 @@ roleRef:
 apiVersion: v1
 kind: Service
 metadata:
-  name: k8s-example-user-code-1
+  name: k8s-pipeline-1
   labels:
-    helm.sh/chart: dagster-user-deployments-1.13.17
+    helm.sh/chart: dagster-user-deployments-1.13.18
     app.kubernetes.io/name: dagster-user-deployments
     app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.13.17"
+    app.kubernetes.io/version: "1.13.18"
     app.kubernetes.io/managed-by: Helm
     component: user-deployments
-    deployment: k8s-example-user-code-1
+    deployment: k8s-pipeline-1
   annotations:
 spec:
   type: "ClusterIP"
@@ -393,7 +393,7 @@ spec:
     app.kubernetes.io/name: dagster-user-deployments
     app.kubernetes.io/instance: release-name
     component: user-deployments
-    deployment: k8s-example-user-code-1
+    deployment: k8s-pipeline-1
 ---
 # Source: dagster/charts/postgresql/templates/svc-headless.yaml
 apiVersion: v1
@@ -445,10 +445,10 @@ kind: Service
 metadata:
   name: release-name-dagster-webserver
   labels:
-    helm.sh/chart: dagster-1.13.17
+    helm.sh/chart: dagster-1.13.18
     app.kubernetes.io/name: dagster
     app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.13.17"
+    app.kubernetes.io/version: "1.13.18"
     app.kubernetes.io/managed-by: Helm
     component: dagster-webserver
   annotations:
@@ -469,15 +469,15 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: release-name-dagster-user-deployments-k8s-example-user-code-1
+  name: release-name-dagster-user-deployments-k8s-pipeline-1
   labels:
-    helm.sh/chart: dagster-user-deployments-1.13.17
+    helm.sh/chart: dagster-user-deployments-1.13.18
     app.kubernetes.io/name: dagster-user-deployments
     app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.13.17"
+    app.kubernetes.io/version: "1.13.18"
     app.kubernetes.io/managed-by: Helm
     component: user-deployments
-    deployment: k8s-example-user-code-1
+    deployment: k8s-pipeline-1
   annotations: 
     {}
 spec:
@@ -487,16 +487,16 @@ spec:
       app.kubernetes.io/name: dagster-user-deployments
       app.kubernetes.io/instance: release-name
       component: user-deployments
-      deployment: k8s-example-user-code-1
+      deployment: k8s-pipeline-1
   template:
     metadata:
       labels:
         app.kubernetes.io/name: dagster-user-deployments
         app.kubernetes.io/instance: release-name
         component: user-deployments
-        deployment: k8s-example-user-code-1
+        deployment: k8s-pipeline-1
       annotations:
-        checksum/dagster-user-deployment: 00af02a6950885ab033ca1fe38e540fb1be5f24542d03102a6a7073707023f2c
+        checksum/dagster-user-deployment: 9f6a816cf66a0acaa0197ad127fb3f89917843b1aab7cb7da378fd11a9cf8fb8
     spec:
       imagePullSecrets: 
         []
@@ -509,11 +509,11 @@ spec:
           securityContext: 
             {}
           imagePullPolicy: Always
-          image: "docker.io/dagster/user-code-example:1.13.17"
-          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "00af02a6950885ab033ca1fe38e540fb1be5f24542d03102a6a7073707023f2c", "--python-file","/example_project/example_repo/repo.py"]
+          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-221c128"
+          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "9f6a816cf66a0acaa0197ad127fb3f89917843b1aab7cb7da378fd11a9cf8fb8", "--python-file","/opt/dagster-pipeline-1/src/first_tuto/definitions.py"]
           env:
             - name: DAGSTER_CURRENT_IMAGE
-              value: "docker.io/dagster/user-code-example:1.13.17"
+              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-221c128"
             - name: DAGSTER_PG_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -522,13 +522,13 @@ spec:
             # uses the auto_envvar_prefix of the dagster cli to set the --container-context arg
             # on 'dagster api grpc'
             - name: DAGSTER_CLI_API_GRPC_CONTAINER_CONTEXT
-              value: "{\"k8s\":{\"env_config_maps\":[\"release-name-dagster-user-deployments-k8s-example-user-code-1-user-env\"],\"image_pull_policy\":\"Always\",\"namespace\":\"dagster\",\"run_k8s_config\":{\"pod_spec_config\":{\"automount_service_account_token\":true}},\"service_account_name\":\"release-name-dagster-user-deployments-user-deployments\"}}"
+              value: "{\"k8s\":{\"env_config_maps\":[\"release-name-dagster-user-deployments-k8s-pipeline-1-user-env\"],\"image_pull_policy\":\"Always\",\"namespace\":\"dagster\",\"run_k8s_config\":{\"pod_spec_config\":{\"automount_service_account_token\":true}},\"service_account_name\":\"release-name-dagster-user-deployments-user-deployments\"}}"
             # If this is a map, we write it to a configmap. If it's a list, we include it here (can use more k8s spec like valueFrom).
           envFrom:
             - configMapRef:
                 name: release-name-dagster-user-deployments-user-deployments-shared-env
             - configMapRef:
-                name: release-name-dagster-user-deployments-k8s-example-user-code-1-user-env
+                name: release-name-dagster-user-deployments-k8s-pipeline-1-user-env
             - secretRef:
                 name: dagster-celery-config-secret
                 optional: true
@@ -561,10 +561,10 @@ kind: Deployment
 metadata:
   name: release-name-dagster-daemon
   labels:
-    helm.sh/chart: dagster-1.13.17
+    helm.sh/chart: dagster-1.13.18
     app.kubernetes.io/name: dagster
     app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.13.17"
+    app.kubernetes.io/version: "1.13.18"
     app.kubernetes.io/managed-by: Helm
     component: dagster-daemon
     deployment: daemon
@@ -587,8 +587,8 @@ spec:
         component: dagster-daemon
         deployment: daemon
       annotations:
-        checksum/dagster-workspace: 8f9c5307993961f5f2acef81b0ef77dceb9f5aef6415047221f92867bec4b759
-        checksum/dagster-instance: 7552c7dc45e6e4056b90905aa2ec048b08bee5deeb0c3780ff290eb86402c4ba
+        checksum/dagster-workspace: b2e80c09a1787dcd3cb4252ab114e2412877c3b67fe00f61fab786fccb2d380c
+        checksum/dagster-instance: b3bc13ca406047e5cf5ad5b5eb51374c390ea403844d2e20018bfbd168013b44
     spec:
       imagePullSecrets:
         []
@@ -605,9 +605,9 @@ spec:
             {}
           resources:
             {}
-        - name: "init-user-deployment-k8s-example-user-code-1"
+        - name: "init-user-deployment-k8s-pipeline-1"
           image: "docker.io/busybox:1.28"
-          command: ['sh', '-c', "until nslookup k8s-example-user-code-1; do echo waiting for user service; sleep 2; done"]
+          command: ['sh', '-c', "until nslookup k8s-pipeline-1; do echo waiting for user service; sleep 2; done"]
           securityContext:
             {}
       containers:
@@ -615,7 +615,7 @@ spec:
           securityContext:
             {}
           imagePullPolicy: Always
-          image: "docker.io/dagster/dagster-celery-k8s:1.13.17"
+          image: "docker.io/dagster/dagster-celery-k8s:1.13.18"
           command: [
             "/bin/bash",
             "-c",
@@ -663,10 +663,10 @@ kind: Deployment
 metadata:
   name: release-name-dagster-webserver
   labels:
-    helm.sh/chart: dagster-1.13.17
+    helm.sh/chart: dagster-1.13.18
     app.kubernetes.io/name: dagster
     app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.13.17"
+    app.kubernetes.io/version: "1.13.18"
     app.kubernetes.io/managed-by: Helm
     component: dagster-webserver
   annotations:
@@ -686,8 +686,8 @@ spec:
         app.kubernetes.io/instance: release-name
         component: dagster-webserver
       annotations:
-        checksum/dagster-workspace: 8f9c5307993961f5f2acef81b0ef77dceb9f5aef6415047221f92867bec4b759
-        checksum/dagster-instance: 7552c7dc45e6e4056b90905aa2ec048b08bee5deeb0c3780ff290eb86402c4ba
+        checksum/dagster-workspace: b2e80c09a1787dcd3cb4252ab114e2412877c3b67fe00f61fab786fccb2d380c
+        checksum/dagster-instance: b3bc13ca406047e5cf5ad5b5eb51374c390ea403844d2e20018bfbd168013b44
         created-by: 'ltshb'
         managed-by: 'kubectl'
     spec:
@@ -702,9 +702,9 @@ spec:
           command: ['sh', '-c', 'until pg_isready -h release-name-postgresql -p 5432 -U test; do echo waiting for database; sleep 2; done;']
           securityContext:
             {}
-        - name: "init-user-deployment-k8s-example-user-code-1"
+        - name: "init-user-deployment-k8s-pipeline-1"
           image: "docker.io/busybox:1.28"
-          command: ['sh', '-c', "until nslookup k8s-example-user-code-1; do echo waiting for user service; sleep 2; done"]
+          command: ['sh', '-c', "until nslookup k8s-pipeline-1; do echo waiting for user service; sleep 2; done"]
           securityContext:
             {}
       containers:
@@ -712,7 +712,7 @@ spec:
           securityContext:
             {}
           imagePullPolicy: Always
-          image: "docker.io/dagster/dagster-celery-k8s:1.13.17"
+          image: "docker.io/dagster/dagster-celery-k8s:1.13.18"
           command: [
             "/bin/bash",
             "-c",

@@ -1,0 +1,5 @@
+.dg
+.gitignore
+.venv
+.tmp_*
+tests

@@ -338,11 +338,11 @@ dagster-user-deployments:
 
   # List of unique deployments
   deployments:
-    - name: "k8s-example-user-code-1"
+    - name: "k8s-pipeline-1"
       image:
         # When a tag is not supplied, it will default as the Helm chart version.
-        repository: "docker.io/dagster/user-code-example"
-        tag: ~
+        repository: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1"
+        tag: local-ltshb-221c128
 
         # Change with caution! If you're using a fixed tag for pipeline run images, changing the
         # image pull policy to anything other than "Always" will use a cached/stale image, which is
@@ -364,7 +364,7 @@ dagster-user-deployments:
       # deployment pod.
       dagsterApiGrpcArgs:
         - "--python-file"
-        - "/example_project/example_repo/repo.py"
+        - "/opt/dagster-pipeline-1/src/first_tuto/definitions.py"
       port: 3030
 
       # Number of replicas of the user code gRPC server Deployment.
