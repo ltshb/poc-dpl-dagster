@@ -36,13 +36,18 @@ ENV UV_TOOL_BIN_DIR=/usr/local/bin
 # for an example.
 ENV UV_PYTHON_DOWNLOADS=0
 
-# Install all the dependencies
+# Install dependencies only first (without the project itself), so that this
+# layer is cached as long as uv.lock/pyproject.toml don't change
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --locked
+    uv sync --locked --no-install-project
 
 COPY --chown=${USER}:${GROUP} . ${INSTALL_DIR}/
+
+# Now that the source is present, install the project itself
+RUN --mount=type=cache,target=/root/.cache/uv \
+    cd ${INSTALL_DIR} && uv sync --locked
 
 ###########################################################
 # Container to use in production
