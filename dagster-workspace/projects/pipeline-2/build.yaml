@@ -1,0 +1,4 @@
+directory: .
+# Registry is specified in the build.yaml file at the root of the workspace,
+# but can be overridden here.
+# registry: '...'

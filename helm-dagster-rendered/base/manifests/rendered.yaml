@@ -92,6 +92,20 @@ data:
   # If this is a map, we write it to this configmap. If it's a list, we include it
   # directly on the container (can use more k8s spec like valueFrom).
 ---
+# Source: dagster/charts/dagster-user-deployments/templates/configmap-env-user.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: release-name-dagster-user-deployments-k8s-pipeline-2-user-env
+  labels:
+    app: dagster-user-deployments
+    chart: dagster-user-deployments-1.13.18
+    release: release-name
+    heritage: Helm
+data:
+  # If this is a map, we write it to this configmap. If it's a list, we include it
+  # directly on the container (can use more k8s spec like valueFrom).
+---
 # Source: dagster/templates/configmap-env-daemon.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -274,6 +288,11 @@ data:
           port: 3030
           location_name: k8s-pipeline-1
           
+      - grpc_server:
+          host: k8s-pipeline-2
+          port: 3030
+          location_name: k8s-pipeline-2
+          
 
 ---
 # Source: dagster/charts/dagster-user-deployments/templates/role.yaml
@@ -395,6 +414,32 @@ spec:
     component: user-deployments
     deployment: k8s-pipeline-1
 ---
+# Source: dagster/charts/dagster-user-deployments/templates/service-user.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-pipeline-2
+  labels:
+    helm.sh/chart: dagster-user-deployments-1.13.18
+    app.kubernetes.io/name: dagster-user-deployments
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.13.18"
+    app.kubernetes.io/managed-by: Helm
+    component: user-deployments
+    deployment: k8s-pipeline-2
+  annotations:
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 3030
+      protocol: TCP
+      name: grpc
+  selector:
+    app.kubernetes.io/name: dagster-user-deployments
+    app.kubernetes.io/instance: release-name
+    component: user-deployments
+    deployment: k8s-pipeline-2
+---
 # Source: dagster/charts/postgresql/templates/svc-headless.yaml
 apiVersion: v1
 kind: Service
@@ -496,7 +541,7 @@ spec:
         component: user-deployments
         deployment: k8s-pipeline-1
       annotations:
-        checksum/dagster-user-deployment: 9f6a816cf66a0acaa0197ad127fb3f89917843b1aab7cb7da378fd11a9cf8fb8
+        checksum/dagster-user-deployment: d4fd2cc9e73d6cda49618ee1e199526e97977823ce93143a01b05c221b517ebd
     spec:
       imagePullSecrets: 
         []
@@ -509,11 +554,11 @@ spec:
           securityContext: 
             {}
           imagePullPolicy: Always
-          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-221c128"
-          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "9f6a816cf66a0acaa0197ad127fb3f89917843b1aab7cb7da378fd11a9cf8fb8", "--python-file","/opt/dagster-pipeline-1/src/first_tuto/definitions.py"]
+          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-1277200"
+          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "d4fd2cc9e73d6cda49618ee1e199526e97977823ce93143a01b05c221b517ebd", "--python-file","/app/src/pipeline_1/definitions.py"]
           env:
             - name: DAGSTER_CURRENT_IMAGE
-              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-221c128"
+              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-1277200"
             - name: DAGSTER_PG_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -529,6 +574,96 @@ spec:
                 name: release-name-dagster-user-deployments-user-deployments-shared-env
             - configMapRef:
                 name: release-name-dagster-user-deployments-k8s-pipeline-1-user-env
+            - secretRef:
+                name: dagster-celery-config-secret
+                optional: true
+          resources: 
+            {}
+          volumeMounts:
+        # Only disable readiness if explicitly set to false
+          readinessProbe:
+            exec:
+              command: ["dagster", "api", "grpc-health-check", "-p", "3030"]
+            periodSeconds:
+              20
+            timeoutSeconds:
+              10
+            successThreshold:
+              1
+            failureThreshold:
+              1
+      nodeSelector: 
+        {}
+      affinity: 
+        {}
+      tolerations:
+        []
+      volumes:
+---
+# Source: dagster/charts/dagster-user-deployments/templates/deployment-user.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-name-dagster-user-deployments-k8s-pipeline-2
+  labels:
+    helm.sh/chart: dagster-user-deployments-1.13.18
+    app.kubernetes.io/name: dagster-user-deployments
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.13.18"
+    app.kubernetes.io/managed-by: Helm
+    component: user-deployments
+    deployment: k8s-pipeline-2
+  annotations: 
+    {}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: dagster-user-deployments
+      app.kubernetes.io/instance: release-name
+      component: user-deployments
+      deployment: k8s-pipeline-2
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: dagster-user-deployments
+        app.kubernetes.io/instance: release-name
+        component: user-deployments
+        deployment: k8s-pipeline-2
+      annotations:
+        checksum/dagster-user-deployment: e53d65afa06c1b1311d83f3d4ca8a738cfc13f92d11fc80257e8e8803b8ca411
+    spec:
+      imagePullSecrets: 
+        []
+      serviceAccountName: release-name-dagster-user-deployments-user-deployments
+      automountServiceAccountToken: true
+      securityContext: 
+        {}
+      containers:
+        - name: dagster-user-deployments
+          securityContext: 
+            {}
+          imagePullPolicy: Always
+          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2:local-ltshb-1277200"
+          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "e53d65afa06c1b1311d83f3d4ca8a738cfc13f92d11fc80257e8e8803b8ca411", "--python-file","/app/src/pipeline_2/definitions.py"]
+          env:
+            - name: DAGSTER_CURRENT_IMAGE
+              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2:local-ltshb-1277200"
+            - name: DAGSTER_PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dagster-postgresql-secret
+                  key: postgresql-password
+            # uses the auto_envvar_prefix of the dagster cli to set the --container-context arg
+            # on 'dagster api grpc'
+            - name: DAGSTER_CLI_API_GRPC_CONTAINER_CONTEXT
+              value: "{\"k8s\":{\"env_config_maps\":[\"release-name-dagster-user-deployments-k8s-pipeline-2-user-env\"],\"image_pull_policy\":\"Always\",\"namespace\":\"dagster\",\"run_k8s_config\":{\"pod_spec_config\":{\"automount_service_account_token\":true}},\"service_account_name\":\"release-name-dagster-user-deployments-user-deployments\"}}"
+            # If this is a map, we write it to a configmap. If it's a list, we include it here (can use more k8s spec like valueFrom).
+          envFrom:
+            - configMapRef:
+                name: release-name-dagster-user-deployments-user-deployments-shared-env
+            - configMapRef:
+                name: release-name-dagster-user-deployments-k8s-pipeline-2-user-env
             - secretRef:
                 name: dagster-celery-config-secret
                 optional: true
@@ -587,7 +722,7 @@ spec:
         component: dagster-daemon
         deployment: daemon
       annotations:
-        checksum/dagster-workspace: b2e80c09a1787dcd3cb4252ab114e2412877c3b67fe00f61fab786fccb2d380c
+        checksum/dagster-workspace: 54a61b0460a3ed3f087e53a1ced9097edea29b2921a02db74966ed928c2f72a0
         checksum/dagster-instance: b3bc13ca406047e5cf5ad5b5eb51374c390ea403844d2e20018bfbd168013b44
     spec:
       imagePullSecrets:
@@ -608,6 +743,11 @@ spec:
         - name: "init-user-deployment-k8s-pipeline-1"
           image: "docker.io/busybox:1.28"
           command: ['sh', '-c', "until nslookup k8s-pipeline-1; do echo waiting for user service; sleep 2; done"]
+          securityContext:
+            {}
+        - name: "init-user-deployment-k8s-pipeline-2"
+          image: "docker.io/busybox:1.28"
+          command: ['sh', '-c', "until nslookup k8s-pipeline-2; do echo waiting for user service; sleep 2; done"]
           securityContext:
             {}
       containers:
@@ -686,7 +826,7 @@ spec:
         app.kubernetes.io/instance: release-name
         component: dagster-webserver
       annotations:
-        checksum/dagster-workspace: b2e80c09a1787dcd3cb4252ab114e2412877c3b67fe00f61fab786fccb2d380c
+        checksum/dagster-workspace: 54a61b0460a3ed3f087e53a1ced9097edea29b2921a02db74966ed928c2f72a0
         checksum/dagster-instance: b3bc13ca406047e5cf5ad5b5eb51374c390ea403844d2e20018bfbd168013b44
         created-by: 'ltshb'
         managed-by: 'kubectl'
@@ -705,6 +845,11 @@ spec:
         - name: "init-user-deployment-k8s-pipeline-1"
           image: "docker.io/busybox:1.28"
           command: ['sh', '-c', "until nslookup k8s-pipeline-1; do echo waiting for user service; sleep 2; done"]
+          securityContext:
+            {}
+        - name: "init-user-deployment-k8s-pipeline-2"
+          image: "docker.io/busybox:1.28"
+          command: ['sh', '-c', "until nslookup k8s-pipeline-2; do echo waiting for user service; sleep 2; done"]
           securityContext:
             {}
       containers:

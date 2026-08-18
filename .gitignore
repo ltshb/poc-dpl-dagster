@@ -1,0 +1,7 @@
+.venv
+# TODO check if we need .dg in source control
+.dg
+
+# Dagster local dev
+.tmp_dagster_*
+__pycache__
