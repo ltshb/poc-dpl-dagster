@@ -541,7 +541,7 @@ spec:
         component: user-deployments
         deployment: k8s-pipeline-1
       annotations:
-        checksum/dagster-user-deployment: d4fd2cc9e73d6cda49618ee1e199526e97977823ce93143a01b05c221b517ebd
+        checksum/dagster-user-deployment: 8c355196ce94e23cb5852e5f2a44619517d6b8d1f2c46e097772f200eaf70497
     spec:
       imagePullSecrets: 
         []
@@ -554,11 +554,11 @@ spec:
           securityContext: 
             {}
           imagePullPolicy: Always
-          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-1277200"
-          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "d4fd2cc9e73d6cda49618ee1e199526e97977823ce93143a01b05c221b517ebd", "--python-file","/app/src/pipeline_1/definitions.py"]
+          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-4e6e5a6"
+          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "8c355196ce94e23cb5852e5f2a44619517d6b8d1f2c46e097772f200eaf70497", "--python-file","/app/src/pipeline_1/definitions.py"]
           env:
             - name: DAGSTER_CURRENT_IMAGE
-              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-1277200"
+              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-4e6e5a6"
             - name: DAGSTER_PG_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -631,7 +631,7 @@ spec:
         component: user-deployments
         deployment: k8s-pipeline-2
       annotations:
-        checksum/dagster-user-deployment: e53d65afa06c1b1311d83f3d4ca8a738cfc13f92d11fc80257e8e8803b8ca411
+        checksum/dagster-user-deployment: 82cd39cacca15c23e620469e2552e981a03e0537b2dc5d1951001eb737dcc3f1
     spec:
       imagePullSecrets: 
         []
@@ -644,11 +644,11 @@ spec:
           securityContext: 
             {}
           imagePullPolicy: Always
-          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2:local-ltshb-1277200"
-          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "e53d65afa06c1b1311d83f3d4ca8a738cfc13f92d11fc80257e8e8803b8ca411", "--python-file","/app/src/pipeline_2/definitions.py"]
+          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2:local-ltshb-4e6e5a6"
+          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "82cd39cacca15c23e620469e2552e981a03e0537b2dc5d1951001eb737dcc3f1", "--python-file","/app/src/pipeline_2/definitions.py"]
           env:
             - name: DAGSTER_CURRENT_IMAGE
-              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2:local-ltshb-1277200"
+              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2:local-ltshb-4e6e5a6"
             - name: DAGSTER_PG_PASSWORD
               valueFrom:
                 secretKeyRef:

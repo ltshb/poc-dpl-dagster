@@ -28,18 +28,41 @@ cd ../..
 dg scaffold build-artifacts
 ```
 
-## 4. Adding dagster-cloud to each pipeline
+## 4. Adding dagster-postgres to each pipeline
 
-`dagster-cloud` is needed in both projects
+`dagster-postgres` is needed in both projects
 
 ```bash
 cd projects/pipeline-1
-uv add dagster-cloud
+uv add dagster-postgres
 cd ../pipeline-2
-uv add dagster-cloud
+uv add dagster-postgres
 ```
 
-## 5. Update the helm values
+## 5. Remove the dagster-cloud check in Dockerfile
+
+The generated Dockerfile include a check for `dagster-cloud`, which is not needed for
+OSS deployment, it is only needed for dagster+ cloud deployment.
+
+So in both project dockerfile remove the `dagster-cloud` check.
+
+```diff
+--- a/dagster-workspace/projects/pipeline-1/Dockerfile
++++ b/dagster-workspace/projects/pipeline-1/Dockerfile
+@@ -32,9 +32,3 @@ COPY --from=builder /app /app
+ ENV PATH="/app/.venv/bin:$PATH"
+
+ WORKDIR /app
+-
+-# Make sure dagster-cloud is installed. Fail early here if not.
+-RUN if ! dagster-cloud --version; then \
+-        echo "Could not find the dagster-cloud package.  Make sure you include the dagster-cloud package in your project."; \
+-        exit 1; \
+-    fi
+```
+
+
+## 6. Update the helm values
 
 ```yaml
     - name: "k8s-pipeline-1"

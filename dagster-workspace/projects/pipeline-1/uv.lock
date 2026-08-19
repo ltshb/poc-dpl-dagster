@@ -450,24 +450,6 @@ wheels = [
 ]
 
 [[package]]
-name = "dagster-cloud"
-version = "1.13.18"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "dagster" },
-    { name = "dagster-cloud-cli" },
-    { name = "dagster-shared" },
-    { name = "pex" },
-    { name = "questionary" },
-    { name = "requests" },
-    { name = "typer" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c6/41/1554b9b5a0ccc10488c66d41a1f03569dfe219f53a57ff8401498d7238f5/dagster_cloud-1.13.18.tar.gz", hash = "sha256:a705e6ce04d438187c46fe72a74c649fc6e7bbb18a116a2297559cab3b389331", size = 737131, upload-time = "2026-08-14T19:15:31.319Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/6f/1e/b9778c03289847be65dffa8fe1ef898e518a3c37395fae4e8d2d2ad9648c/dagster_cloud-1.13.18-py3-none-any.whl", hash = "sha256:d854af1985e54600b6e8bfb34530133289b8956ee0aca5fa7312aef62eda4781", size = 204300, upload-time = "2026-08-14T19:15:29.879Z" },
-]
-
-[[package]]
 name = "dagster-cloud-cli"
 version = "1.13.18"
 source = { registry = "https://pypi.org/simple" }
@@ -1292,21 +1274,11 @@ wheels = [
 ]
 
 [[package]]
-name = "pex"
-version = "2.59.5"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/91/35/6bfd6677428fa0c3aec43d05760854ec9b0a054f0e456665903b1a08098f/pex-2.59.5.tar.gz", hash = "sha256:3bcad71f7dd2df47f9b4dd0dea5d837fe4d9d2792b79fd34726c00bfd5f05923", size = 5136890, upload-time = "2025-10-09T04:19:06.255Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/96/eb/80e9012146f6dbba4e1b3dae8b45c771b459fc1615e17e80b1f322794d7c/pex-2.59.5-py2.py3-none-any.whl", hash = "sha256:b9dba4f05b6be08da89b0c54f4bc75ed01c32dfde8ee06f87e82b3a6c69ee388", size = 3873314, upload-time = "2025-10-09T04:19:04.123Z" },
-]
-
-[[package]]
 name = "pipeline-1"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "dagster" },
-    { name = "dagster-cloud" },
     { name = "dagster-postgres" },
 ]
 
@@ -1319,7 +1291,6 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "dagster", specifier = "==1.13.18" },
-    { name = "dagster-cloud", specifier = ">=1.13.18" },
     { name = "dagster-postgres", specifier = ">=0.29.18" },
 ]
 

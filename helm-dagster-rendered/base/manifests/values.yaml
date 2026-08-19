@@ -342,7 +342,7 @@ dagster-user-deployments:
       image:
         # When a tag is not supplied, it will default as the Helm chart version.
         repository: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1"
-        tag: local-ltshb-1277200
+        tag: local-ltshb-4e6e5a6
 
         # Change with caution! If you're using a fixed tag for pipeline run images, changing the
         # image pull policy to anything other than "Always" will use a cached/stale image, which is
@@ -492,7 +492,7 @@ dagster-user-deployments:
       image:
         # When a tag is not supplied, it will default as the Helm chart version.
         repository: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2"
-        tag: local-ltshb-1277200
+        tag: local-ltshb-4e6e5a6
 
         # Change with caution! If you're using a fixed tag for pipeline run images, changing the
         # image pull policy to anything other than "Always" will use a cached/stale image, which is
