@@ -1,20 +1,4 @@
 ---
-# Source: dagster/charts/dagster-user-deployments/templates/serviceaccount.yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: release-name-dagster-user-deployments-user-deployments
-  labels: 
-    helm.sh/chart: dagster-user-deployments-1.13.18
-    app.kubernetes.io/name: dagster-user-deployments
-    app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.13.18"
-    app.kubernetes.io/managed-by: Helm
-  annotations:
-    {}
-automountServiceAccountToken: false
-
----
 # Source: dagster/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -364,7 +348,7 @@ metadata:
 
 subjects:
 - kind: ServiceAccount
-  name: release-name-dagster-user-deployments-user-deployments
+  name: dagster-user-deployments
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -541,11 +525,11 @@ spec:
         component: user-deployments
         deployment: k8s-pipeline-1
       annotations:
-        checksum/dagster-user-deployment: 8c355196ce94e23cb5852e5f2a44619517d6b8d1f2c46e097772f200eaf70497
+        checksum/dagster-user-deployment: e74b10c398e7ff7690c3e21b6d738a76bb333c897a2ffc3169d26599c4016875
     spec:
       imagePullSecrets: 
         []
-      serviceAccountName: release-name-dagster-user-deployments-user-deployments
+      serviceAccountName: dagster-user-deployments
       automountServiceAccountToken: true
       securityContext: 
         {}
@@ -554,11 +538,11 @@ spec:
           securityContext: 
             {}
           imagePullPolicy: Always
-          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-4e6e5a6"
-          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "8c355196ce94e23cb5852e5f2a44619517d6b8d1f2c46e097772f200eaf70497", "--python-file","/app/src/pipeline_1/definitions.py"]
+          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-1f3b56b"
+          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "e74b10c398e7ff7690c3e21b6d738a76bb333c897a2ffc3169d26599c4016875", "--python-file","/app/src/pipeline_1/definitions.py"]
           env:
             - name: DAGSTER_CURRENT_IMAGE
-              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-4e6e5a6"
+              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1:local-ltshb-1f3b56b"
             - name: DAGSTER_PG_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -567,7 +551,7 @@ spec:
             # uses the auto_envvar_prefix of the dagster cli to set the --container-context arg
             # on 'dagster api grpc'
             - name: DAGSTER_CLI_API_GRPC_CONTAINER_CONTEXT
-              value: "{\"k8s\":{\"env_config_maps\":[\"release-name-dagster-user-deployments-k8s-pipeline-1-user-env\"],\"image_pull_policy\":\"Always\",\"namespace\":\"dagster\",\"run_k8s_config\":{\"pod_spec_config\":{\"automount_service_account_token\":true}},\"service_account_name\":\"release-name-dagster-user-deployments-user-deployments\"}}"
+              value: "{\"k8s\":{\"env_config_maps\":[\"release-name-dagster-user-deployments-k8s-pipeline-1-user-env\"],\"image_pull_policy\":\"Always\",\"namespace\":\"dagster\",\"run_k8s_config\":{\"pod_spec_config\":{\"automount_service_account_token\":true}},\"service_account_name\":\"dagster-user-deployments\"}}"
             # If this is a map, we write it to a configmap. If it's a list, we include it here (can use more k8s spec like valueFrom).
           envFrom:
             - configMapRef:
@@ -631,11 +615,11 @@ spec:
         component: user-deployments
         deployment: k8s-pipeline-2
       annotations:
-        checksum/dagster-user-deployment: 82cd39cacca15c23e620469e2552e981a03e0537b2dc5d1951001eb737dcc3f1
+        checksum/dagster-user-deployment: 7576e35426de564a513bcf436b762d5887da23041d76fb92e4885f7b2fcab3c9
     spec:
       imagePullSecrets: 
         []
-      serviceAccountName: release-name-dagster-user-deployments-user-deployments
+      serviceAccountName: dagster-user-deployments
       automountServiceAccountToken: true
       securityContext: 
         {}
@@ -644,11 +628,11 @@ spec:
           securityContext: 
             {}
           imagePullPolicy: Always
-          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2:local-ltshb-4e6e5a6"
-          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "82cd39cacca15c23e620469e2552e981a03e0537b2dc5d1951001eb737dcc3f1", "--python-file","/app/src/pipeline_2/definitions.py"]
+          image: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2:local-ltshb-1f3b56b"
+          args: ["dagster", "api", "grpc", "-h", "0.0.0.0", "-p", "3030", "--fixed-server-id", "7576e35426de564a513bcf436b762d5887da23041d76fb92e4885f7b2fcab3c9", "--python-file","/app/src/pipeline_2/definitions.py"]
           env:
             - name: DAGSTER_CURRENT_IMAGE
-              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2:local-ltshb-4e6e5a6"
+              value: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2:local-ltshb-1f3b56b"
             - name: DAGSTER_PG_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -657,7 +641,7 @@ spec:
             # uses the auto_envvar_prefix of the dagster cli to set the --container-context arg
             # on 'dagster api grpc'
             - name: DAGSTER_CLI_API_GRPC_CONTAINER_CONTEXT
-              value: "{\"k8s\":{\"env_config_maps\":[\"release-name-dagster-user-deployments-k8s-pipeline-2-user-env\"],\"image_pull_policy\":\"Always\",\"namespace\":\"dagster\",\"run_k8s_config\":{\"pod_spec_config\":{\"automount_service_account_token\":true}},\"service_account_name\":\"release-name-dagster-user-deployments-user-deployments\"}}"
+              value: "{\"k8s\":{\"env_config_maps\":[\"release-name-dagster-user-deployments-k8s-pipeline-2-user-env\"],\"image_pull_policy\":\"Always\",\"namespace\":\"dagster\",\"run_k8s_config\":{\"pod_spec_config\":{\"automount_service_account_token\":true}},\"service_account_name\":\"dagster-user-deployments\"}}"
             # If this is a map, we write it to a configmap. If it's a list, we include it here (can use more k8s spec like valueFrom).
           envFrom:
             - configMapRef:

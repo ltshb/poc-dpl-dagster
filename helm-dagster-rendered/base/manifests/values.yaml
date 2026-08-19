@@ -329,6 +329,12 @@ dagster-user-deployments:
   # Creates a workspace file with the gRPC servers hosting your user code.
   enabled: true
 
+  # Do not create a service account for user deployments and use the one provided by the operator
+  # which contains AWS IRSA annotations.
+  serviceAccount:
+    create: false
+    name: "dagster-user-deployments"
+
   # If you plan on deploying user code in a separate Helm release, set this to false.
   enableSubchart: true
 
@@ -342,7 +348,7 @@ dagster-user-deployments:
       image:
         # When a tag is not supplied, it will default as the Helm chart version.
         repository: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-1"
-        tag: local-ltshb-4e6e5a6
+        tag: local-ltshb-1f3b56b
 
         # Change with caution! If you're using a fixed tag for pipeline run images, changing the
         # image pull policy to anything other than "Always" will use a cached/stale image, which is
@@ -492,7 +498,7 @@ dagster-user-deployments:
       image:
         # When a tag is not supplied, it will default as the Helm chart version.
         repository: "025064823138.dkr.ecr.eu-central-1.amazonaws.com/poc-datapipeline/dagster-pipeline-2"
-        tag: local-ltshb-4e6e5a6
+        tag: local-ltshb-1f3b56b
 
         # Change with caution! If you're using a fixed tag for pipeline run images, changing the
         # image pull policy to anything other than "Always" will use a cached/stale image, which is
